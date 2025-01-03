@@ -30,6 +30,33 @@ const EventController = {
       return res.status(500).json({ error: "Internal server error uhoh" });
     }
   },
+
+  //update events
+  updateEvent: async (req, res) => {
+    const { id } = req.params;
+    const { title, description, date, location, isOnline } = req.body;
+
+    try {
+      const event = await Event.findByPk(id);
+      if (!event) {
+        return res.status(404).json({ error: "Event not found" });
+      }
+      //update fields in event
+      if (title) event.title = title;
+      if (description) event.description = description;
+      if (date) event.date = date;
+      if (location) event.location = location;
+      if (isOnline) event.isOnline = isOnline;
+
+      await event.save();
+      return res
+        .status(200)
+        .json({ message: "Event has been updated!", event });
+    } catch (error) {
+      console.log("Failed to find event");
+      return res.status(500).json({ error: "internal server error" });
+    }
+  },
 };
 
 module.exports = EventController;
