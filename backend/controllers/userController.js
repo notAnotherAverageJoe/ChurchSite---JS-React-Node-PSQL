@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/users"); // Adjust the path based on your project structure
-
+const User = require("../models/users");
 const SALT_ROUNDS = 10;
 
 const UserController = {
