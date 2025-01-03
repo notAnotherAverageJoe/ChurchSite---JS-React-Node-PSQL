@@ -53,8 +53,24 @@ const EventController = {
         .status(200)
         .json({ message: "Event has been updated!", event });
     } catch (error) {
-      console.log("Failed to find event");
+      console.error("Failed to find event", error);
       return res.status(500).json({ error: "internal server error" });
+    }
+  },
+  deleteEvent: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const event = await Event.findByPk(id);
+      if (!event) {
+        return res
+          .status(404)
+          .json({ message: "Event not found for deletion" });
+      }
+      await event.destroy();
+      return res.status(200).json({ message: "Event deleted successfully" });
+    } catch (error) {
+      console.error("Failed to find event", error);
+      return res.status(500).json({ error: "Internal server error" });
     }
   },
 };
