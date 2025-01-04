@@ -22,7 +22,7 @@ const Member = sequelize.define("member", {
   },
   joinedDate: {
     type: DataTypes.DATE,
-    defaultValue: Data.now,
+    defaultValue: DataTypes.NOW,
   },
 });
 
